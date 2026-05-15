@@ -1,10 +1,12 @@
 <?php
 session_start();
 include "../models/db.php";
+include "../models/task.php";
 
 $project_id = "1"; //dummy value
 $database = new db();
 $connection = $database->connection();
+$taskDB = new task();
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +34,10 @@ $connection = $database->connection();
         </div>
     </div>
 
+
     <div id="taskModal">
         <h2>Create New Task</h2>
-        <form>
+        <form method="POST" action="../controllers/taskCreateController.php">
             <label for="title">Title: </label>
             <input type="text" name="title" required>
             <br><br>
@@ -47,7 +50,7 @@ $connection = $database->connection();
                 <option value="2">Student 2</option>
             </select>
             <br><br>
-            <label for="priority">Priority: </label>            
+            <label for="priority">Priority: </label>
             <input type="radio" name="priority" value="low" checked> Low
             <input type="radio" name="priority" value="medium"> Medium
             <input type="radio" name="priority" value="high"> High
