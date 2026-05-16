@@ -56,11 +56,6 @@ button:hover {
     padding: 16px;
     min-height: 450px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    transition: 0.2s ease;
-}
-
-.column:hover {
-    transform: translateY(-3px);
 }
 
 .column h3 {
@@ -188,4 +183,10 @@ button:hover {
 
 .priority-high {
     background-color: red;
+}
+
+.move-btn {
+    background-color: #6776cc;
+    color: white;
+    border-radius: 100px;
 }
