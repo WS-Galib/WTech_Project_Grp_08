@@ -155,9 +155,37 @@ button:hover {
     padding: 10px 14px;
     border-radius: 8px;
     cursor: pointer;
-    
 }
 
 #taskModal button:hover {
     background: #d1d5db;
+}
+
+
+.task-card {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.priority-badge {
+    padding: 3px 6px;
+    color: white;
+    font-size: 12px;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.priority-low {
+    background-color: grey;
+}
+
+.priority-medium {
+    background-color: #FFBF00;
+    color: black;
+}
+
+.priority-high {
+    background-color: red;
 }

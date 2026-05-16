@@ -25,12 +25,54 @@ $taskDB = new task();
     <div class="column-container">
         <div class="column" id="todo">
             <h3>To Do</h3>
+            <?php
+            $todo_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "todo");
+            if ($todo_tasks && $todo_tasks->num_rows > 0) {
+                while ($row = $todo_tasks->fetch_assoc()) {
+                    echo "<div class='task-card' data-task-id='" . $row["id"] . "'>";
+                    echo "<div><b>" . $row["title"] . "</b></div>";
+                    echo "<div><small>" . $row["description"] . "</small></div>";
+                    echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
+                    echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
+                    echo "</div>";
+                }
+            }
+            ?>
         </div>
+
         <div class="column" id="in-progress">
             <h3>In Progress</h3>
+            <?php
+            $in_progress_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "in-progress");
+            if ($in_progress_tasks && $in_progress_tasks->num_rows > 0) {
+                while ($row = $in_progress_tasks->fetch_assoc()) {
+                    echo "<div class='task-card' data-task-id='" . $row["id"] . "'>";
+                    echo "<div><b>" . $row["title"] . "</b></div>";
+                    echo "<div><small>" . $row["description"] . "</small></div>";
+                    echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
+                    echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
+                    echo "</div>";
+                }
+            }
+            ?>
         </div>
+
         <div class="column" id="done">
             <h3>Done</h3>
+            <?php
+            $done_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "done");
+
+            if ($done_tasks && $done_tasks->num_rows > 0) {
+                while ($row = $done_tasks->fetch_assoc()) {
+                    echo "<div class='task-card' data-task-id='" . $row["id"] . "'>";
+                    echo "<div><b>" . $row["title"] . "</b></div>";
+                    echo "<div><small>" . $row["description"] . "</small></div>";
+                    echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
+                    echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
+                    echo "</div>";
+                }
+            }
+            ?>
         </div>
     </div>
 
