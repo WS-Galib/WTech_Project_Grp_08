@@ -1,3 +1,35 @@
+function UpdateTaskDatabase(card, taskId, newStatus) {
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.responseText);
+
+            if (data.ok === true) {
+                let targetColumn = document.getElementById(data.new_status);
+                targetColumn.appendChild(card);
+
+                let oldButtons = card.querySelectorAll('.move-btn');
+                oldButtons.forEach(btn => btn.remove());
+
+                if (data.new_status === 'todo') {
+                    card.innerHTML += "<button class='move-btn' data-direction='right'>Move &rarr;</button>";
+                }
+                else if (data.new_status === 'in-progress') {
+                    card.innerHTML += "<button class='move-btn' data-direction='left'>&larr; Move</button> <button class='move-btn' data-direction='right'>Move &rarr;</button>";
+                }
+                else if (data.new_status === 'done') {
+                    card.innerHTML += "<button class='move-btn' data-direction='left'>&larr; Move</button>";
+                }
+            }
+        }
+    };
+
+    xhttp.open("POST", "../controllers/taskUpdateController.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("task_id=" + taskId + "&status=" + newStatus);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -24,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.classList.contains("move-btn")) {
             let button = event.target;
             let card = button.closest(".task-card");
-            let taskId = card.getAttribute("data-task-id");
+            let taskId = card.getAttribute("task-id");
             let direction = button.getAttribute("data-direction");
             let currentColumn = card.parentElement.id;
 
