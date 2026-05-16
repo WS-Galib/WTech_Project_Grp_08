@@ -34,7 +34,12 @@ $taskDB = new task();
                     echo "<div><small>" . $row["description"] . "</small></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
                     echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
-                    echo "<hr><button class='move-btn' data-direction='right'>&rarr;</button>";
+                    echo "<hr>";
+                    echo "<form method='POST' action='../controllers/taskUpdateController.php' style='display:inline;'>";
+                    echo "<input type='hidden' name='task_id' value='" . $row["id"] . "'>";
+                    echo "<input type='hidden' name='status' value='in-progress'>";
+                    echo "<button type='submit' class='move-btn'>&rarr;</button>";
+                    echo "</form>";
                     echo "</div>";
                 }
             }
