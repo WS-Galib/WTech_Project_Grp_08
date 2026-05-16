@@ -7,4 +7,18 @@ class task
         $result = $connection->query($sql);
         return $result;
     }
+
+    function getTasksByStatus($connection, $tablename, $project_id, $status)
+    {
+        $sql = "SELECT * FROM " . $tablename . " WHERE project_id='" . $project_id . "' AND status='" . $status . "'";
+        $result = $connection->query($sql);
+        return $result;
+    }
+
+    function updateTaskStatus($connection, $tablename, $task_id, $new_status)
+    {
+        $sql = "UPDATE " . $tablename . " SET status='" . $new_status . "' WHERE id='" . $task_id . "'";
+        $result = $connection->query($sql);
+        return $result;
+    }
 }

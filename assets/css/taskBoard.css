@@ -56,11 +56,6 @@ button:hover {
     padding: 16px;
     min-height: 450px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    transition: 0.2s ease;
-}
-
-.column:hover {
-    transform: translateY(-3px);
 }
 
 .column h3 {
@@ -155,9 +150,49 @@ button:hover {
     padding: 10px 14px;
     border-radius: 8px;
     cursor: pointer;
-    
 }
 
 #taskModal button:hover {
     background: #d1d5db;
+}
+
+
+.task-card {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.priority-badge {
+    padding: 3px 6px;
+    color: white;
+    font-size: 12px;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.priority-low {
+    background-color: grey;
+}
+
+.priority-medium {
+    background-color: #FFBF00;
+    color: black;
+}
+
+.priority-high {
+    background-color: red;
+}
+
+.move-btn {
+    background-color: #6776cc;
+    color: white;
+    border-radius: 100px;
+}
+
+.task-card.overdue {
+    border: 2px solid #ff4444;
+    background-color: #fff0f0;
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.4);
 }
