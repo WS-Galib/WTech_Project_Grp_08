@@ -29,9 +29,13 @@ $taskDB = new task();
             $todo_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "todo");
             if ($todo_tasks && $todo_tasks->num_rows > 0) {
                 while ($row = $todo_tasks->fetch_assoc()) {
+                    $initials = "";
+                    foreach (explode(" ", $row["user_name"] ?? "U N") as $w) {
+                        if ($w) $initials .= strtoupper($w[0]);
+                    }
                     echo "<div class='task-card' task-id='" . $row["id"] . "' due-date='" . $row["due_date"] . "'>";
                     echo "<div><b>" . $row["title"] . "</b></div>";
-                    echo "<div><small>" . $row["description"] . "</small></div>";
+                    echo "<div><span class='member-initials' > " . $initials . "</span></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
                     echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
                     echo "<hr><button class='move-btn' data-direction='right'>&rarr;</button>";
@@ -47,9 +51,13 @@ $taskDB = new task();
             $in_progress_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "in-progress");
             if ($in_progress_tasks && $in_progress_tasks->num_rows > 0) {
                 while ($row = $in_progress_tasks->fetch_assoc()) {
+                    $initials = "";
+                    foreach (explode(" ", $row["user_name"] ?? "U N") as $w) {
+                        if ($w) $initials .= strtoupper($w[0]);
+                    }
                     echo "<div class='task-card' task-id='" . $row["id"] . "' due-date='" . $row["due_date"] . "'>";
                     echo "<div><b>" . $row["title"] . "</b></div>";
-                    echo "<div><small>" . $row["description"] . "</small></div>";
+                    echo "<div><span class='member-initials' > " . $initials . "</span></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
                     echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
                     echo "<hr><button class='move-btn' data-direction='left'>&larr;</button> ";
@@ -67,9 +75,13 @@ $taskDB = new task();
 
             if ($done_tasks && $done_tasks->num_rows > 0) {
                 while ($row = $done_tasks->fetch_assoc()) {
+                    $initials = "";
+                    foreach (explode(" ", $row["user_name"] ?? "U N") as $w) {
+                        if ($w) $initials .= strtoupper($w[0]);
+                    }
                     echo "<div class='task-card' task-id='" . $row["id"] . "' due-date='" . $row["due_date"] . "'>";
                     echo "<div><b>" . $row["title"] . "</b></div>";
-                    echo "<div><small>" . $row["description"] . "</small></div>";
+                    echo "<div><span class='member-initials' > " . $initials . "</span></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
                     echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
                     echo "<hr><button class='move-btn' data-direction='left'>&larr;</button> ";
@@ -91,9 +103,15 @@ $taskDB = new task();
             <textarea name="description" placeholder="Enter the task description"></textarea>
             <br><br>
             <label for="assignedTo">Assign To: </label>
-            <select name="assigned_to"> <!-- dummy value -->
-                <option value="1">Student 1</option>
-                <option value="2">Student 2</option>
+            <select name="assigned_to">
+                <?php
+                $members = $taskDB->getProjectMembers($connection, $project_id);
+                if ($members && $members->num_rows > 0) {
+                    while ($member_row = $members->fetch_assoc()) {
+                        echo "<option value='" . $member_row["user_id"] . "'>" . $member_row["name"] . "</option>";
+                    }
+                }
+                ?>
             </select>
             <br><br>
             <label for="priority">Priority: </label>
