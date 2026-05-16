@@ -91,9 +91,15 @@ $taskDB = new task();
             <textarea name="description" placeholder="Enter the task description"></textarea>
             <br><br>
             <label for="assignedTo">Assign To: </label>
-            <select name="assigned_to"> <!-- dummy value -->
-                <option value="1">Student 1</option>
-                <option value="2">Student 2</option>
+            <select name="assigned_to">
+                <?php
+                $members = $taskDB->getProjectMembers($connection, $project_id);
+                if ($members && $members->num_rows > 0) {
+                    while ($member_row = $members->fetch_assoc()) {
+                        echo "<option value='" . $member_row["user_id"] . "'>" . $member_row["name"] . "</option>";
+                    }
+                }
+                ?>
             </select>
             <br><br>
             <label for="priority">Priority: </label>
