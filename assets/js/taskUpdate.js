@@ -13,13 +13,28 @@ function UpdateTaskDatabase(card, taskId, newStatus) {
                 oldButtons.forEach(btn => btn.remove());
 
                 if (data.new_status === 'todo') {
-                    card.innerHTML += "<button class='move-btn' data-direction='right'>Move &rarr;</button>";
+                    card.innerHTML += "<button class='move-btn' data-direction='right'>&rarr;</button>";
                 }
                 else if (data.new_status === 'in-progress') {
-                    card.innerHTML += "<button class='move-btn' data-direction='left'>&larr; Move</button> <button class='move-btn' data-direction='right'>Move &rarr;</button>";
+                    card.innerHTML += "<button class='move-btn' data-direction='left'>&larr;</button> <button class='move-btn' data-direction='right'>&rarr;</button>";
                 }
                 else if (data.new_status === 'done') {
-                    card.innerHTML += "<button class='move-btn' data-direction='left'>&larr; Move</button>";
+                    card.innerHTML += "<button class='move-btn' data-direction='left'>&larr;</button>";
+                }
+
+                
+                card.classList.remove('overdue'); 
+                if (data.new_status !== 'done') {
+                    let dueDateString = card.getAttribute('due-date');
+                    if (dueDateString) {
+                        let today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        let dueDate = new Date(dueDateString);
+                        
+                        if (dueDate < today) {
+                            card.classList.add('overdue');
+                        }
+                    }
                 }
             }
         }
