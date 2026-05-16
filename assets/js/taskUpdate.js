@@ -18,4 +18,34 @@ document.addEventListener("DOMContentLoaded", function () {
             card.classList.add("overdue");
         }
     }
+
+    let board = document.querySelector(".column-container");
+    board.addEventListener("click", function (event) {
+        if (event.target.classList.contains("move-btn")) {
+            let button = event.target;
+            let card = button.closest(".task-card");
+            let taskId = card.getAttribute("data-task-id");
+            let direction = button.getAttribute("data-direction");
+            let currentColumn = card.parentElement.id;
+
+            let newStatus = "";
+            if (direction === "right") {
+                if (currentColumn === "todo") {
+                    newStatus = "in-progress";
+                } else if (currentColumn === "in-progress") {
+                    newStatus = "done";
+                }
+            } else if (direction === "left") {
+                if (currentColumn === "done") {
+                    newStatus = "in-progress";
+                } else if (currentColumn === "in-progress") {
+                    newStatus = "todo";
+                }
+            }
+
+            if (newStatus !== "") {
+                UpdateTaskDatabase(card, taskId, newStatus);
+            }
+        }
+    });
 });
