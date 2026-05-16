@@ -14,4 +14,11 @@ class task
         $result = $connection->query($sql);
         return $result;
     }
+
+    function updateTaskStatus($connection, $tablename, $task_id, $new_status)
+    {
+        $sql = "UPDATE " . $tablename . " SET status='" . $new_status . "' WHERE id='" . $task_id . "'";
+        $result = $connection->query($sql);
+        return $result;
+    }
 }
