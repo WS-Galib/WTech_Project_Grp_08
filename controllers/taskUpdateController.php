@@ -16,7 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $taskDB = new task();
         $result = $taskDB->updateTaskStatus($connection, "tasks", $task_id, $new_status);
 
-        header("Loaction: ../views/taskBoard.php");
-        exit();
+        if ($result) {
+            echo json_encode(array("ok" => true, "new_status" => $new_status));
+        } else {
+            echo json_encode(array("ok" => false));
+        }
     }
 }

@@ -29,17 +29,12 @@ $taskDB = new task();
             $todo_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "todo");
             if ($todo_tasks && $todo_tasks->num_rows > 0) {
                 while ($row = $todo_tasks->fetch_assoc()) {
-                    echo "<div class='task-card' data-task-id='" . $row["id"] . "'>";
+                    echo "<div class='task-card' task-id='" . $row["id"] . "' due-date='" . $row["due_date"] . "'>";
                     echo "<div><b>" . $row["title"] . "</b></div>";
                     echo "<div><small>" . $row["description"] . "</small></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
                     echo "<div><i>Due: " . $row["due_date"] . "</i></div>";
-                    echo "<hr>";
-                    echo "<form method='POST' action='../controllers/taskUpdateController.php' style='display:inline;'>";
-                    echo "<input type='hidden' name='task_id' value='" . $row["id"] . "'>";
-                    echo "<input type='hidden' name='status' value='in-progress'>";
-                    echo "<button type='submit' class='move-btn'>&rarr;</button>";
-                    echo "</form>";
+                    echo "<hr><button class='move-btn' data-direction='right'>&rarr;</button>";
                     echo "</div>";
                 }
             }
@@ -52,7 +47,7 @@ $taskDB = new task();
             $in_progress_tasks = $taskDB->getTasksByStatus($connection, "tasks", $project_id, "in-progress");
             if ($in_progress_tasks && $in_progress_tasks->num_rows > 0) {
                 while ($row = $in_progress_tasks->fetch_assoc()) {
-                    echo "<div class='task-card' data-task-id='" . $row["id"] . "'>";
+                    echo "<div class='task-card' task-id='" . $row["id"] . "' due-date='" . $row["due_date"] . "'>";
                     echo "<div><b>" . $row["title"] . "</b></div>";
                     echo "<div><small>" . $row["description"] . "</small></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
@@ -72,7 +67,7 @@ $taskDB = new task();
 
             if ($done_tasks && $done_tasks->num_rows > 0) {
                 while ($row = $done_tasks->fetch_assoc()) {
-                    echo "<div class='task-card' data-task-id='" . $row["id"] . "'>";
+                    echo "<div class='task-card' task-id='" . $row["id"] . "' due-date='" . $row["due_date"] . "'>";
                     echo "<div><b>" . $row["title"] . "</b></div>";
                     echo "<div><small>" . $row["description"] . "</small></div>";
                     echo "<div class='priority-badge priority-" . strtolower($row["priority"]) . "'>" . $row["priority"] . "</div>";
@@ -114,6 +109,7 @@ $taskDB = new task();
         </form>
     </div>
 
+    <script src="../assets/js/taskUpdate.js"></script>
 </body>
 
 </html>

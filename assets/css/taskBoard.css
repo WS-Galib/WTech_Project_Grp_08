@@ -190,3 +190,9 @@ button:hover {
     color: white;
     border-radius: 100px;
 }
+
+.task-card.overdue {
+    border: 2px solid #ff4444;
+    background-color: #fff0f0;
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.4);
+}
