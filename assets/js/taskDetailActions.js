@@ -56,3 +56,36 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+function deleteComment(commentId) {
+    if (!confirm("Are you sure you want to delete this comment?")) {
+        return;
+    }
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "../controllers/commentDeleteController.php?id=" + encodeURIComponent(commentId), true);
+    
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            try {
+                let response = JSON.parse(this.responseText);
+
+                if (response.ok === true) {
+                    let commentElement = document.getElementById("comment-" + commentId);
+                    
+                    if (commentElement) {
+                        commentElement.style.transition = "opacity 0.4s ease";
+                        commentElement.style.opacity = "0";
+                        setTimeout(() => commentElement.remove(), 400);
+                    }
+                } 
+                else {
+                    alert("Error: " + (response.error || "Could not delete comment."));
+                }
+            } 
+            catch (err) {
+                alert("Server response error.");
+            }
+        }
+    };
+
+    xhr.send();
+}
