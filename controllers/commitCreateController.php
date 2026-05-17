@@ -43,4 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->close();
             $action_text = "Commented on task '" . $task_title . "'";
             log_activity($connection, $project_id, $user_id, $action_text);
-            
+             echo json_encode([
+                "ok" => true,
+                "comment" => ["id" => $new_comment_id,"author_name" => $author_name,"body" => htmlspecialchars($body),"created_at" => date("Y-m-d H:i:s")]]);
+            exit();
+        }
+        $stmt->close();
+    }
+
+    echo json_encode(["ok" => false, "error" => "Database failure during save operations."]);
+    exit();
+}
+?>
+
