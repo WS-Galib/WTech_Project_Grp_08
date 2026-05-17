@@ -35,7 +35,12 @@ if (!$membership || $membership->num_rows == 0) {
 <body>
     <h1>Task Board</h1>
     <hr>
+    
     <button onclick="document.getElementById('taskModal').style.display='block'">+ New Task</button>
+    
+    <a href="activity.php?project_id=<?php echo $project_id; ?>" style="text-decoration: none;">
+        <button style="background: #10b981; margin-left: 10px;">View Activity Log</button>
+    </a>
 
     <div class="column-container">
         <div class="column" id="todo">
@@ -151,6 +156,7 @@ if (!$membership || $membership->num_rows == 0) {
     </div>
 
     <script src="../assets/js/taskUpdate.js"></script>
+    <script src="../assets/js/comments.js"></script>
 </body>
 
 </html>
