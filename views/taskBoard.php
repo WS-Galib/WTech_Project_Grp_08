@@ -3,10 +3,25 @@ session_start();
 include "../models/db.php";
 include "../models/task.php";
 
-$project_id = "1"; //dummy value
+if (!isset($_SESSION["user_id"])) {
+    header("Location: ../views/login.php"); // dummy
+    exit();
+}
+
+$project_id = $_GET["project_id"] ?? ""; 
+if (empty($project_id)) {
+    header("Location: ../views/dashboard.php"); // dummy
+    exit();
+}
+
 $database = new db();
 $connection = $database->connection();
 $taskDB = new task();
+
+$membership = $taskDB->checkProjectMembership($connection, $project_id, $_SESSION["user_id"]);
+if (!$membership || $membership->num_rows == 0) {
+    die("Access Denied: You are not a member of this project.");
+}
 ?>
 
 <!DOCTYPE html>
