@@ -35,4 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
         echo json_encode(["ok" => false, "error" => "Permission denied."]);
         exit();
     }
+    $delete_sql = "DELETE FROM comments WHERE id = ?";
+    $d_stmt = $connection->prepare($delete_sql);
+    $d_stmt->bind_param("i", $comment_id);
     
+    if ($d_stmt->execute()) {
+        $d_stmt->close();
+        $action_text = "Deleted a comment on task '" . $target_comment["title"] . "'";
+        log_activity($connection, $target_comment["project_id"], $active_user_id, $action_text);
+        
+
+
