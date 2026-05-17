@@ -53,3 +53,40 @@ $comments_result = $c_stmt->get_result();
         <p style="color: #64748b; margin: 10px 0 20px 0;"><?php echo htmlspecialchars($task['description'] ?: 'No description provided.'); ?></p>
         
         <hr>
+        <h3>Comments</h3>
+        <div id="comments-thread">
+            <?php 
+            if ($comments_result && $comments_result->num_rows > 0) {
+                while ($comment = $comments_result->fetch_assoc()) {
+                    echo "<div class='comment-box' id='comment-" . $comment['id'] . "'>";
+                    echo "  <div class='comment-meta'><b>" . htmlspecialchars($comment['author_name']) . "</b> &bull; " . $comment['created_at'] . "</div>";
+                    echo "  <div class='comment-body'>" . htmlspecialchars($comment['body']) . "</div>";
+                    
+                    // Display delete option ONLY if the active session matches the comment author
+                    if ($_SESSION['user_id'] == $comment['user_id']) {
+                        echo "  <a class='delete-link' onclick='deleteComment(" . $comment['id'] . ")'>Delete</a>";
+                    }
+                    echo "</div>";
+                }
+            } else {
+                echo "<p id='no-comments-msg' style='color: #94a3b8; font-style: italic; padding: 10px 0;'>No comments yet. Start the conversation!</p>";
+            }
+            ?>
+        </div>
+
+        <div class="comment-form">
+            <h4>Leave a Comment</h4>
+            <form id="ajax-comment-form">
+                <input type="hidden" id="form-task-id" value="<?php echo $task_id; ?>">
+                <input type="hidden" id="form-project-id" value="<?php echo $task['project_id']; ?>">
+                
+                <textarea id="comment-body-input" placeholder="Type your comment here..." required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+            <div id="form-error-output" style="color: #ef4444; font-size: 13px; margin-top: 8px; display: none;"></div>
+        </div>
+    </div>
+
+    <script src="../assets/js/taskDetailActions.js"></script>
+</body>
+</html>
