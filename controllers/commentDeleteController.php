@@ -43,6 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
         $d_stmt->close();
         $action_text = "Deleted a comment on task '" . $target_comment["title"] . "'";
         log_activity($connection, $target_comment["project_id"], $active_user_id, $action_text);
-        
+        echo json_encode(["ok" => true]);
+        exit();
+    }
+    echo json_encode(["ok" => false, "error" => "Database error during deletion."]);
+    exit();
+} else {
+    echo json_encode(["ok" => false, "error" => "Invalid request method."]);
+    exit();
+}
+?>
 
 
