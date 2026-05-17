@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $priority = $_POST["priority"];
     $due_date = $_POST["due_date"];
 
-    if (!empty($title) && !empty($due_date)) {
+    if (!empty($title) && !empty($due_date) && !empty($project_id)) {
         $database = new db();
         $connection = $database->connection();
         $taskDB = new task();
@@ -37,10 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result) {
             Header("Location: ../views/taskBoard.php?project_id=" . $project_id);
+            exit();
         } else {
-            echo "Failed to save task to the database.";
+            $_SESSION["task_error"] = "Failed to save task to the database.";
+            Header("Location: ../views/taskBoard.php?project_id=" . $project_id);
+            exit();
         }
     } else {
-        echo "Validation Failed: Title and Due Date are required.";
+        $_SESSION["task_error"] = "Validation Failed: Title and Due Date are required.";
+        $fallback_id = !empty($project_id) ? $project_id : "1";
+        Header("Location: ../views/taskBoard.php?project_id=" . $fallback_id);
+        exit();
     }
 }

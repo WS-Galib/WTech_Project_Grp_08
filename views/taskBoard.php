@@ -107,10 +107,18 @@ if (!$membership || $membership->num_rows == 0) {
         </div>
     </div>
 
-
-    <div id="taskModal">
+    <div id="taskModal" style="display: <?php echo isset($_SESSION['task_error']) ? 'block' : 'none'; ?>;">
         <h2>Create New Task</h2>
+
+        <?php
+        if (isset($_SESSION["task_error"])) {
+            echo "<div class='error-msg'><b>Error:</b> " . $_SESSION["task_error"] . "</div>";
+            unset($_SESSION["task_error"]);
+        }
+        ?>
+
         <form method="POST" action="../controllers/taskCreateController.php">
+            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
             <label for="title">Title: </label>
             <input type="text" name="title" required>
             <br><br>
