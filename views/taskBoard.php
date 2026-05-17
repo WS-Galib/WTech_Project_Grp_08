@@ -4,13 +4,13 @@ include "../models/db.php";
 include "../models/task.php";
 
 if (!isset($_SESSION["user_id"])) {
-    header("Location: ../views/login.php"); // dummy
+    header("Location: ../views/workspace/home.php");
     exit();
 }
 
 $project_id = $_GET["project_id"] ?? ""; 
 if (empty($project_id)) {
-    header("Location: ../views/dashboard.php"); // dummy
+    header("Location: ../views/workspace/home.php");
     exit();
 }
 

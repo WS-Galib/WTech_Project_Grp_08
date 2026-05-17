@@ -4,7 +4,7 @@ include "../models/db.php";
 include "../models/task.php";
 
 if (!isset($_SESSION["user_id"])) {
-    header("Location: ../views/login.php"); //dummy
+    header("Location: ../views/auth/login.php");
     exit();
 }
 
