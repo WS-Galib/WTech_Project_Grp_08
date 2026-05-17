@@ -3,7 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (boardContainer) {
         boardContainer.addEventListener("click", function (event) {
-                        if (event.target.classList.contains("move-btn")) {
-                return; // Let Student 3's code handle the column movement
+
+            if (event.target.classList.contains("move-btn")) {
+                return; 
             }
+            let taskCard = event.target.closest(".task-card");
+
+            if (taskCard) {
+                let taskId = taskCard.getAttribute("task-id");
+
+                if (taskId) {
+                    window.location.href = "../views/taskDetail.php?task_id=" + taskId;
+                }
+            }
+        });
+    }
+});
 
